@@ -12,7 +12,7 @@ list_files = (fp for fp in os.listdir(path) if Path(fp).is_file())
 
 lock = multiprocessing.Lock()
 
-def parse():
+def parse(name):
     title = re.search(r'([a-z|A-Z]+)_.', os.path.splitext(name)[0])
     new_name = title.group(1)
 
@@ -28,6 +28,6 @@ if __name__ == '__main__':
     os.chdir(path)
 
     for tid, name in enumerate(list_files):
-        t = threading.Thread(target=parse, name=tid, args=[])
+        t = threading.Thread(target=parse, name=tid, args=[name])
         t.start()
         t.join()
