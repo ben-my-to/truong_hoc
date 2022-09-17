@@ -7,7 +7,6 @@ import multiprocessing, threading
 from pathlib import Path
 
 
-# path = Path('path/to/target/directory/')
 path = Path('submissions/')
 list_files = (fp for fp in os.listdir(path) if Path(fp).is_file())
 
