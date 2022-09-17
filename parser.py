@@ -8,15 +8,19 @@ from pathlib import Path
 
 
 path = Path('submissions/')
-list_files = (fp for fp in os.listdir(path) if Path(fp).is_file())
+list_files = (_ for _ in os.listdir(path) if Path(_).is_file())
 
 lock = multiprocessing.Lock()
 
 def parse(name):
+    """Synthesizes each submission's file name and
+    moves it to a new/existing folder
+    """
+
     title = re.search(r'([a-z|A-Z]+)_.', os.path.splitext(name)[0])
     new_name = title.group(1)
 
-    lock.acquire()
+    lock.acquire()  # enforce mutual-exclusion as condition should be autonomously checked
     if not Path(new_name).is_dir():
         Path(new_name).mkdir(parents=True, exist_ok=True)
     lock.release()
